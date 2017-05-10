@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /***********************************************************************
  * Copyright (c) 1997-2016, International Business Machines Corporation
  * and others. All Rights Reserved.
@@ -294,14 +292,14 @@ void NumberFormatRegressionTest::Test4088161 (void)
         df->setMinimumFractionDigits(0);
         df->setMaximumFractionDigits(16);
         UnicodeString sBuf1;
-        FieldPosition fp1(FieldPosition::DONT_CARE);
+        FieldPosition fp1(0);
         logln(UnicodeString("d = ") + d);
         logln(UnicodeString("maxFractionDigits = ") + df->getMaximumFractionDigits());
 
         logln(" format(d) = '" + df->format(d, sBuf1, fp1) + "'");
         df->setMaximumFractionDigits(17);
         UnicodeString sBuf2;
-        FieldPosition fp2(FieldPosition::DONT_CARE);
+        FieldPosition fp2(0);
         logln(UnicodeString("maxFractionDigits = ") + df->getMaximumFractionDigits());
         sBuf2 = df->format(d, sBuf2, fp2);
         if(sBuf2 != "100")
@@ -386,7 +384,7 @@ void NumberFormatRegressionTest::Test4088503 (void)
     FieldPosition fp(FieldPosition::DONT_CARE);
     //try {
         logln(df->format((int32_t)123, sBuf, fp));
-        //if(fp == FieldPosition(FieldPosition::DONT_CARE))
+        //if(fp == FieldPosition(0))
         //    errln("Test for bug 4088503 failed.");
     /*} catch (Exception foo) {
         errln("Test for bug 4088503 failed.");
@@ -694,7 +692,7 @@ void NumberFormatRegressionTest::Test4090489 (void)
     double d = 1.000000000000001E7;
     //BigDecimal bd = new BigDecimal(d);
     UnicodeString sb;
-    FieldPosition fp(FieldPosition::DONT_CARE);
+    FieldPosition fp(0);
     logln(UnicodeString("d = ") + d);
     //logln("BigDecimal.toString():  " + bd.toString());
     df->format(d, sb, fp);
@@ -1399,7 +1397,7 @@ void NumberFormatRegressionTest::Test4062486(void)
         return;
     }
     UnicodeString formatted;
-    FieldPosition field(FieldPosition::DONT_CARE);
+    FieldPosition field(0);
     double num = 1234.5;
     fmt->format(num, formatted, field);
     if (field.getBeginIndex() != 0 && field.getEndIndex() != 5)

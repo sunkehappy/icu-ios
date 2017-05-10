@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*************************************************************************
  * Copyright (c) 1999-2016, International Business Machines
  * Corporation and others. All Rights Reserved.
@@ -55,7 +53,7 @@ public:
     void TestThaiLineBreak();
     void TestMixedThaiLineBreak();
     void TestMaiyamok();
-    void TestMonkey();
+    void TestMonkey(char *params);
 
     void TestExtended();
     UChar *ReadAndConvertFile(const char *fileName, int &ulen, const char *encoding, UErrorCode &status);
@@ -74,8 +72,6 @@ public:
     void TestDictRules();
     void TestBug5532();
     void TestBug9983();
-    void TestBug7547();
-    void TestBug12797();
 
     void TestDebug();
     void TestProperties();
@@ -144,9 +140,6 @@ private:
      *  @return FALSE if the test case should be run, TRUE if it should be skipped.
      */
     UBool testCaseIsKnownIssue(const UnicodeString &testCase, const char *fileName);
-
-    // Test parameters, from the test framework and test invocation.
-    const char* fTestParams;
 };
 
 #endif /* #if !UCONFIG_NO_BREAK_ITERATION */

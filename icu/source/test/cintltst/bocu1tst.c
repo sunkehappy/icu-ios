@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 ******************************************************************************
 *
@@ -344,7 +342,7 @@ packDiff(int32_t diff) {
     } while(--count>0);
 
     /* add lead byte */
-    result |= (uint32_t)(lead+diff)<<shift;
+    result|=(lead+diff)<<shift;
 
     return result;
 }

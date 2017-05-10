@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 **********************************************************************
 *   Copyright (C) 2001-2011,2014 IBM and others. All rights reserved.
@@ -190,13 +188,11 @@ typedef enum {
      */
     USEARCH_ELEMENT_COMPARISON = 2,
 
-#ifndef U_HIDE_DEPRECATED_API
     /**
-     * One more than the highest normal USearchAttribute value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * Count of attribute types
+     * @stable ICU 2.4
      */
     USEARCH_ATTRIBUTE_COUNT = 3
-#endif  // U_HIDE_DEPRECATED_API
 } USearchAttribute;
 
 /**
@@ -266,13 +262,11 @@ typedef enum {
      */
     USEARCH_ANY_BASE_WEIGHT_IS_WILDCARD,
 
-#ifndef U_HIDE_DEPRECATED_API
     /**
-     * One more than the highest normal USearchAttributeValue value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * Count of attribute values
+     * @stable ICU 2.4
      */
     USEARCH_ATTRIBUTE_VALUE_COUNT
-#endif  // U_HIDE_DEPRECATED_API
 } USearchAttributeValue;
 
 /* open and close ------------------------------------------------------ */

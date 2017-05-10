@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 *   Copyright (C) 2010-2012, International Business Machines
@@ -37,7 +35,7 @@ class BytesTrieElement : public UMemory {
 public:
     // Use compiler's default constructor, initializes nothing.
 
-    void setTo(StringPiece s, int32_t val, CharString &strings, UErrorCode &errorCode);
+    void setTo(const StringPiece &s, int32_t val, CharString &strings, UErrorCode &errorCode);
 
     StringPiece getString(const CharString &strings) const {
         int32_t offset=stringOffset;
@@ -88,7 +86,7 @@ private:
 };
 
 void
-BytesTrieElement::setTo(StringPiece s, int32_t val,
+BytesTrieElement::setTo(const StringPiece &s, int32_t val,
                         CharString &strings, UErrorCode &errorCode) {
     if(U_FAILURE(errorCode)) {
         return;
@@ -145,7 +143,7 @@ BytesTrieBuilder::~BytesTrieBuilder() {
 }
 
 BytesTrieBuilder &
-BytesTrieBuilder::add(StringPiece s, int32_t value, UErrorCode &errorCode) {
+BytesTrieBuilder::add(const StringPiece &s, int32_t value, UErrorCode &errorCode) {
     if(U_FAILURE(errorCode)) {
         return *this;
     }
@@ -167,7 +165,7 @@ BytesTrieBuilder::add(StringPiece s, int32_t value, UErrorCode &errorCode) {
             return *this; // error instead of dereferencing null
         }
         if(elementsLength>0) {
-            uprv_memcpy(newElements, elements, (size_t)elementsLength*sizeof(BytesTrieElement));
+            uprv_memcpy(newElements, elements, elementsLength*sizeof(BytesTrieElement));
         }
         delete[] elements;
         elements=newElements;

@@ -501,6 +501,9 @@
     <ClCompile Include="ucsdet.cpp">
       <Filter>charset detect</Filter>
     </ClCompile>
+    <ClCompile Include="identifier_info.cpp">
+      <Filter>spoof</Filter>
+    </ClCompile>
     <ClCompile Include="scriptset.cpp">
       <Filter>spoof</Filter>
     </ClCompile>
@@ -514,6 +517,9 @@
       <Filter>spoof</Filter>
     </ClCompile>
     <ClCompile Include="uspoof_impl.cpp">
+      <Filter>spoof</Filter>
+    </ClCompile>
+    <ClCompile Include="uspoof_wsconf.cpp">
       <Filter>spoof</Filter>
     </ClCompile>
     <ClCompile Include="alphaindex.cpp">
@@ -707,9 +713,6 @@
       <Filter>formatting</Filter>
     </ClInclude>
     <ClInclude Include="digitlst.h">
-      <Filter>formatting</Filter>
-    </ClInclude>
-    <ClInclude Include="dt_impl.h">
       <Filter>formatting</Filter>
     </ClInclude>
     <ClInclude Include="dtitv_impl.h">
@@ -937,6 +940,9 @@
     <ClInclude Include="inputext.h">
       <Filter>charset detect</Filter>
     </ClInclude>
+    <ClInclude Include="identifier_info.h">
+      <Filter>spoof</Filter>
+    </ClInclude>
     <ClInclude Include="scriptset.h">
       <Filter>spoof</Filter>
     </ClInclude>
@@ -944,6 +950,9 @@
       <Filter>spoof</Filter>
     </ClInclude>
     <ClInclude Include="uspoof_impl.h">
+      <Filter>spoof</Filter>
+    </ClInclude>
+    <ClInclude Include="uspoof_wsconf.h">
       <Filter>spoof</Filter>
     </ClInclude>
     <ClInclude Include="tzgnames.h">

@@ -1,7 +1,4 @@
 # -*- mode: org -*-
-# Copyright (C) 2016 and later: Unicode, Inc. and others.
-# License & terms of use: http://www.unicode.org/copyright.html#License
-#
 # Copyright (C) 2012 International Business Machines Corporation and Others. All Rights Reserved. 
 
 How Expensive Is It?

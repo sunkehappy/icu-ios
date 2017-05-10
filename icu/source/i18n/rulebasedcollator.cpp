@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 1996-2015, International Business Machines
@@ -1611,7 +1609,7 @@ RuleBasedCollator::isUnsafe(UChar32 c) const {
     return data->isUnsafeBackward(c, settings->isNumeric());
 }
 
-void U_CALLCONV
+void
 RuleBasedCollator::computeMaxExpansions(const CollationTailoring *t, UErrorCode &errorCode) {
     t->maxExpansions = CollationElementIterator::computeMaxExpansions(t->data, errorCode);
 }

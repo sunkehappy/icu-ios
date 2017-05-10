@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT:
  * Copyright (c) 2007-2016, International Business Machines Corporation and
@@ -15,7 +13,6 @@
 #include "unicode/ulocdata.h"
 #include "unicode/ucnv.h"
 #include "unicode/unistr.h"
-#include "cstr.h"
 
 /*
 To add a new enum type
@@ -692,9 +689,8 @@ void KnownIssues::add(const char *ticket, const char *where, const UChar *msg, U
   }
   if(msg==NULL || !*msg) return;
 
-  const icu::UnicodeString ustr(msg);
-
-  fTable[ticket][where].insert(std::string(icu::CStr(ustr)()));
+  std::string str;
+  fTable[ticket][where].insert(icu::UnicodeString(msg).toUTF8String(str));
 }
 
 void KnownIssues::add(const char *ticket, const char *where, const char *msg, UBool *firstForTicket, UBool *firstForWhere)

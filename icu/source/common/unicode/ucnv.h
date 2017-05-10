@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 **********************************************************************
 *   Copyright (C) 1999-2014, International Business Machines
@@ -943,13 +941,8 @@ typedef enum UConverterUnicodeSet {
     UCNV_ROUNDTRIP_SET,
     /** Select the set of Unicode code points with roundtrip or fallback mappings. @stable ICU 4.0 */
     UCNV_ROUNDTRIP_AND_FALLBACK_SET,
-#ifndef U_HIDE_DEPRECATED_API
-    /**
-     * Number of UConverterUnicodeSet selectors.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
-     */
+    /** Number of UConverterUnicodeSet selectors. @stable ICU 2.6 */
     UCNV_SET_COUNT
-#endif  // U_HIDE_DEPRECATED_API
 } UConverterUnicodeSet;
 
 

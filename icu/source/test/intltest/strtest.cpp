@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2015, International Business Machines Corporation and
@@ -172,7 +170,6 @@ void StringTest::runIndexedTest(int32_t index, UBool exec, const char *&name, ch
     TESTCASE_AUTO(TestStringByteSink);
     TESTCASE_AUTO(TestCharString);
     TESTCASE_AUTO(TestCStr);
-    TESTCASE_AUTO(Testctou);
     TESTCASE_AUTO_END;
 }
 
@@ -545,12 +542,4 @@ StringTest::TestCStr() {
     if (0 != strcmp(CStr(us)(), cs)) {
         errln("%s:%d CStr(s)() failed. Expected \"%s\", got \"%s\"", __FILE__, __LINE__, cs, CStr(us)());
     }
-}
-
-void
-StringTest::Testctou() {
-  const char *cs = "Fa\\u0127mu";
-  UnicodeString u = ctou(cs);
-  assertEquals("Testing unescape@0", (int32_t)0x0046, u.charAt(0));
-  assertEquals("Testing unescape@2", (int32_t)295, u.charAt(2));
 }

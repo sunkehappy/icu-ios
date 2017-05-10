@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2003, 2007-2009 International Business Machines Corporation and
@@ -20,7 +18,6 @@
 #define _CNUMDEPTST
 
 #include "unicode/utypes.h"
-#include "unicode/unum.h"
 
 #if !UCONFIG_NO_FORMATTING
 

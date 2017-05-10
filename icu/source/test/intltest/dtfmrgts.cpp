@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2016, International Business Machines Corporation and
@@ -1074,7 +1072,7 @@ void DateFormatRegressionTest::Test4151706(void)
         errln("Fail: " + e);
     }*/
     UnicodeString temp;
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     logln(dateString + " -> " + fmt.format(d, temp, pos));
 }
 
@@ -1102,7 +1100,7 @@ DateFormatRegressionTest::Test4162071(void)
         else
             errln("Parse format \"" + format + "\" failed.");
         UnicodeString temp;
-        FieldPosition pos(FieldPosition::DONT_CARE);
+        FieldPosition pos(0);
         logln(dateString + " -> " + df.format(x, temp, pos));
     //} catch (Exception e) {
     //    errln("Parse format \"" + format + "\" failed.");
@@ -1564,7 +1562,7 @@ void DateFormatRegressionTest::TestT10334(void) {
     format.applyPattern(pattern);
     UDate referenceDate = format.parse(text, status);
 
-    FieldPosition fp(FieldPosition::DONT_CARE);
+    FieldPosition fp(0);
     UnicodeString formattedString("");
     pattern = UnicodeString("YYYY LL dd ee cc qq QQ");
     format.applyPattern(pattern);

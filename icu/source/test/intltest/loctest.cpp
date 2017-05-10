@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT:
  * Copyright (c) 1997-2016, International Business Machines Corporation and
@@ -1552,7 +1550,7 @@ LocaleTest::Test4105828()
             return;
         }
         UnicodeString result;
-        FieldPosition pos(FieldPosition::DONT_CARE);
+        FieldPosition pos(0);
         fmt->format((int32_t)1, result, pos);
         UnicodeString temp;
         if(result != "100%") {

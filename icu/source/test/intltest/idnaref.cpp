@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  *******************************************************************************
  *
@@ -341,7 +339,7 @@ idnaref_toASCII(const UChar* src, int32_t srcLength,
     }
     if(srcIsASCII){
         if(b1Len <= destCapacity){
-            u_memmove(dest, b1, b1Len);
+            uprv_memmove(dest, b1, b1Len * U_SIZEOF_UCHAR);
             reqLength = b1Len;
         }else{
             reqLength = b1Len;
@@ -382,9 +380,9 @@ idnaref_toASCII(const UChar* src, int32_t srcLength,
                 goto CLEANUP;
             }
             //Step 7: prepend the ACE prefix
-            u_memcpy(dest, ACE_PREFIX, ACE_PREFIX_LENGTH);
+            uprv_memcpy(dest,ACE_PREFIX,ACE_PREFIX_LENGTH * U_SIZEOF_UCHAR);
             //Step 6: copy the contents in b2 into dest
-            u_memcpy(dest+ACE_PREFIX_LENGTH, b2, b2Len);
+            uprv_memcpy(dest+ACE_PREFIX_LENGTH, b2, b2Len * U_SIZEOF_UCHAR);
 
         }else{
             *status = U_IDNA_ACE_PREFIX_ERROR;
@@ -507,7 +505,7 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
 
         // copy everything to b1
         if(srcLength < b1Capacity){
-            u_memmove(b1, src, srcLength);
+            uprv_memmove(b1,src, srcLength * U_SIZEOF_UCHAR);
         }else{
             /* we do not have enough room so grow the buffer*/
             b1 = (UChar*) uprv_malloc(srcLength * U_SIZEOF_UCHAR);
@@ -515,7 +513,7 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
                 *status = U_MEMORY_ALLOCATION_ERROR;
                 goto CLEANUP;
             }
-            u_memmove(b1, src, srcLength);
+            uprv_memmove(b1,src, srcLength * U_SIZEOF_UCHAR);
         }
         b1Len = srcLength;
     }
@@ -577,7 +575,7 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
         //step 8: return output of step 5
         reqLength = b2Len;
         if(b2Len <= destCapacity) {
-            u_memmove(dest, b2, b2Len);
+            uprv_memmove(dest, b2, b2Len * U_SIZEOF_UCHAR);
         }
     }else{
         // verify that STD3 ASCII rules are satisfied
@@ -603,7 +601,7 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
         }
         //copy the source to destination
         if(srcLength <= destCapacity){
-            u_memmove(dest, src, srcLength);
+            uprv_memmove(dest,src,srcLength * U_SIZEOF_UCHAR);
         }
         reqLength = srcLength;
     }
@@ -628,9 +626,9 @@ CLEANUP:
         //copy the source to destination
         if(dest && srcLength <= destCapacity){
           if(srcLength == -1) {
-            u_memmove(dest, src, u_strlen(src));
+            uprv_memmove(dest,src,u_strlen(src)* U_SIZEOF_UCHAR);
           } else {
-            u_memmove(dest, src, srcLength);
+            uprv_memmove(dest,src,srcLength * U_SIZEOF_UCHAR);
           }
         }
         reqLength = srcLength;
@@ -752,7 +750,7 @@ idnaref_IDNToASCII(  const UChar* src, int32_t srcLength,
             int32_t tempLen = (reqLength + b1Len );
             // copy to dest
             if( tempLen< destCapacity){
-                u_memmove(dest+reqLength, b1, b1Len);
+                uprv_memmove(dest+reqLength, b1, b1Len * U_SIZEOF_UCHAR);
             }
 
             reqLength = tempLen;
@@ -801,7 +799,7 @@ idnaref_IDNToASCII(  const UChar* src, int32_t srcLength,
             int32_t tempLen = (reqLength + b1Len );
             // copy to dest
             if( tempLen< destCapacity){
-                u_memmove(dest+reqLength, b1, b1Len);
+                uprv_memmove(dest+reqLength, b1, b1Len * U_SIZEOF_UCHAR);
             }
 
             reqLength = tempLen;
@@ -906,7 +904,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
             int32_t tempLen = (reqLength + b1Len );
             // copy to dest
             if( tempLen< destCapacity){
-                u_memmove(dest+reqLength, b1, b1Len);
+                uprv_memmove(dest+reqLength, b1, b1Len * U_SIZEOF_UCHAR);
             }
 
             reqLength = tempLen;
@@ -958,7 +956,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
             int32_t tempLen = (reqLength + b1Len );
             // copy to dest
             if( tempLen< destCapacity){
-                u_memmove(dest+reqLength, b1, b1Len);
+                uprv_memmove(dest+reqLength, b1, b1Len * U_SIZEOF_UCHAR);
             }
 
             reqLength = tempLen;

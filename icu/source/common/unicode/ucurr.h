@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 **********************************************************************
 * Copyright (c) 2002-2016, International Business Machines
@@ -52,13 +50,11 @@ enum UCurrencyUsage {
      * @stable ICU 54
      */
     UCURR_USAGE_CASH=1,
-#ifndef U_HIDE_DEPRECATED_API
     /**
      * One higher than the last enum UCurrencyUsage constant.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * @stable ICU 54
      */
     UCURR_USAGE_COUNT=2
-#endif  // U_HIDE_DEPRECATED_API
 };
 typedef enum UCurrencyUsage UCurrencyUsage; 
 

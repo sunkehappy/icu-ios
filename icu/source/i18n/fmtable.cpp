@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 1997-2016, International Business Machines Corporation and
@@ -157,7 +155,7 @@ Formattable::Formattable(int64_t value)
 // -------------------------------------
 // Creates a formattable object with a decimal number value from a string.
 
-Formattable::Formattable(StringPiece number, UErrorCode &status) {
+Formattable::Formattable(const StringPiece &number, UErrorCode &status) {
     init();
     setDecimalNumber(number, status);
 }
@@ -798,7 +796,7 @@ Formattable::adoptDigitList(DigitList *dl) {
 
 // ---------------------------------------
 void
-Formattable::setDecimalNumber(StringPiece numberString, UErrorCode &status) {
+Formattable::setDecimalNumber(const StringPiece &numberString, UErrorCode &status) {
     if (U_FAILURE(status)) {
         return;
     }

@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2015, International Business Machines Corporation and
@@ -38,7 +36,7 @@ public:
     virtual void TestCalendarExtremeLimit(void);
 
     void TestLimits(void);
-    void TestLimitsThread(int32_t threadNumber);
+    void TestLimitsThread(int threadNumber);
 
 private:
     /*

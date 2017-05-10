@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  **************************************************************************
  *   Copyright (c) 2002-2010, International Business Machines Corporation *
@@ -351,7 +349,7 @@ class TransliteratorIDParser /* not : public UObject because all methods are sta
     /**
      * Initialize static memory.
      */
-    static void U_CALLCONV init(UErrorCode &status);
+    static void init(UErrorCode &status);
 
     friend class SingleID;
 };

@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *****************************************************************************************
 * Copyright (C) 2010-2013, International Business Machines
@@ -54,13 +52,11 @@ enum UPluralType {
      * @stable ICU 50
      */
     UPLURAL_TYPE_ORDINAL,
-#ifndef U_HIDE_DEPRECATED_API
     /**
-     * One more than the highest normal UPluralType value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * Number of Plural rules types.
+     * @stable ICU 50
      */
     UPLURAL_TYPE_COUNT
-#endif  // U_HIDE_DEPRECATED_API
 };
 /**
  * @stable ICU 50

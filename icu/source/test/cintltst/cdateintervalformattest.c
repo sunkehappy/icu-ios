@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * Copyright (c) 2011-2016, International Business Machines Corporation
  * and others. All Rights Reserved.
@@ -282,7 +280,8 @@ static void TestFPos_SkelWithSeconds()
 	    UChar   ubuf[kSizeUBuf];
 	    int32_t ulen, uelen;
 	    UErrorCode status = U_ZERO_ERROR;
-            ulen = u_unescape(locSkelItemPtr->skeleton, ubuf, kSizeUBuf);
+	    
+	    u_strFromUTF8(ubuf, kSizeUBuf, &ulen, locSkelItemPtr->skeleton, -1, &status);
 	    udifmt = udtitvfmt_open(locSkelItemPtr->locale, ubuf, ulen, zoneGMT, -1, &status);
 	    if ( U_FAILURE(status) ) {
            log_data_err("FAIL: udtitvfmt_open for locale %s, skeleton %s: %s\n",

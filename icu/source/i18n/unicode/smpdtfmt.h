@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 * Copyright (C) 1997-2016, International Business Machines Corporation and
 * others. All Rights Reserved.
@@ -653,7 +651,7 @@ class SimpleDateFormatMutableNFs;
  *         = new SimpleDateFormat ("yyyy.MM.dd G 'at' hh:mm:ss a zzz", success );
  *     GregorianCalendar cal(success);
  *     UDate currentTime_1 = cal.getTime(success);
- *     FieldPosition fp(FieldPosition::DONT_CARE);
+ *     FieldPosition fp(0);
  *     UnicodeString dateString;
  *     formatter->format( currentTime_1, dateString, fp );
  *     cout << "result: " << dateString << endl;
@@ -1001,12 +999,6 @@ public:
      * (Presumably, letters that would be more mnemonic in that locale's
      * language.)  This function would produce a pattern using those
      * letters.
-     * <p>
-     * <b>Note:</b> This implementation depends on DateFormatSymbols::getLocalPatternChars()
-     * to get localized format pattern characters. ICU does not include
-     * localized pattern character data, therefore, unless user sets localized
-     * pattern characters manually, this method returns the same result as
-     * toPattern().
      *
      * @param result    Receives the localized pattern.
      * @param status    Output param set to success/failure code on

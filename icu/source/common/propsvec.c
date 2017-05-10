@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 *
@@ -220,7 +218,7 @@ upvec_setValue(UPropsVectors *pv,
                 *pErrorCode=U_MEMORY_ALLOCATION_ERROR;
                 return;
             }
-            uprv_memcpy(newVectors, pv->v, (size_t)rows*columns*4);
+            uprv_memcpy(newVectors, pv->v, rows*columns*4);
             firstRow=newVectors+(firstRow-pv->v);
             lastRow=newVectors+(lastRow-pv->v);
             uprv_free(pv->v);
@@ -242,7 +240,7 @@ upvec_setValue(UPropsVectors *pv,
         if(splitFirstRow) {
             /* copy all affected rows up one and move the lastRow pointer */
             count = (int32_t)((lastRow-firstRow)+columns);
-            uprv_memmove(firstRow+columns, firstRow, (size_t)count*4);
+            uprv_memmove(firstRow+columns, firstRow, count*4);
             lastRow+=columns;
 
             /* split the range and move the firstRow pointer */
@@ -253,7 +251,7 @@ upvec_setValue(UPropsVectors *pv,
         /* split the last row */
         if(splitLastRow) {
             /* copy the last row data */
-            uprv_memcpy(lastRow+columns, lastRow, (size_t)columns*4);
+            uprv_memcpy(lastRow+columns, lastRow, columns*4);
 
             /* split the range and move the firstRow pointer */
             lastRow[1]=lastRow[columns]=(uint32_t)limit;
@@ -417,7 +415,7 @@ upvec_compact(UPropsVectors *pv, UPVecCompactHandler *handler, void *context, UE
         /* add a new values vector if it is different from the current one */
         if(count<0 || 0!=uprv_memcmp(row+2, pv->v+count, valueColumns*4)) {
             count+=valueColumns;
-            uprv_memmove(pv->v+count, row+2, (size_t)valueColumns*4);
+            uprv_memmove(pv->v+count, row+2, valueColumns*4);
         }
 
         if(start<UPVEC_FIRST_SPECIAL_CP) {
@@ -479,7 +477,7 @@ upvec_cloneArray(const UPropsVectors *pv,
 
 U_CAPI UTrie2 * U_EXPORT2
 upvec_compactToUTrie2WithRowIndexes(UPropsVectors *pv, UErrorCode *pErrorCode) {
-    UPVecToUTrie2Context toUTrie2={ NULL, 0, 0, 0 };
+    UPVecToUTrie2Context toUTrie2={ NULL };
     upvec_compact(pv, upvec_compactToUTrie2Handler, &toUTrie2, pErrorCode);
     utrie2_freeze(toUTrie2.trie, UTRIE2_16_VALUE_BITS, pErrorCode);
     if(U_FAILURE(*pErrorCode)) {

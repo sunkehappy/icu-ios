@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /***********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2011, International Business Machines Corporation
@@ -164,7 +162,7 @@ if (fr != NULL && it != NULL && de != NULL)
     Formattable fD(d, Formattable::kIsDate);
 
     UnicodeString res1, res2, res3;
-    FieldPosition pos1(FieldPosition::DONT_CARE), pos2(FieldPosition::DONT_CARE);
+    FieldPosition pos1(0), pos2(0);
     
     status = U_ZERO_ERROR;
     res1 = fr->format(d, res1, pos1, status);

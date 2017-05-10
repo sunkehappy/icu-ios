@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 //
 //  rbbisetb.cpp
 //
@@ -548,7 +546,7 @@ void RBBISetBuilder::printSets() {
         RBBI_DEBUG_printUnicodeString(usetNode->fText);
         RBBIDebugPrintf("\n");
         if (usetNode->fLeftChild != NULL) {
-            RBBINode::printTree(usetNode->fLeftChild, TRUE);
+            usetNode->fLeftChild->printTree(TRUE);
         }
     }
     RBBIDebugPrintf("\n");

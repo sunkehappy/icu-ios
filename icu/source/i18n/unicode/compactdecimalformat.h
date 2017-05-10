@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 ********************************************************************************
 *   Copyright (C) 2012-2016, International Business Machines
@@ -159,6 +157,7 @@ public:
                                   FieldPositionIterator* posIter,
                                   UErrorCode& status) const;
 
+	/* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual. */
     /**
      * Format a long number using base-10 representation.
      *
@@ -168,7 +167,7 @@ public:
      * @param pos       On input: an alignment field, if desired.
      *                  On output: the offsets of the alignment field.
      * @return          Reference to 'appendTo' parameter.
-     * @stable ICU 56
+     * @draft ICU 56
      */
     virtual UnicodeString& format(int32_t number,
                                   UnicodeString& appendTo,
@@ -275,7 +274,7 @@ public:
      * @return          Reference to 'appendTo' parameter.
      * @internal
      */
-    virtual UnicodeString& format(StringPiece number,
+    virtual UnicodeString& format(const StringPiece &number,
                                   UnicodeString& appendTo,
                                   FieldPositionIterator* posIter,
                                   UErrorCode& status) const;

@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  ******************************************************************************
  *
@@ -430,7 +428,7 @@ ufile_fill_uchar_buffer(UFILE *f)
 
     /* shift the buffer if it isn't empty */
     if(dataSize != 0) {
-        u_memmove(f->fUCBuffer, str->fPos, dataSize); /* not accessing beyond memory */
+        uprv_memmove(f->fUCBuffer, str->fPos, dataSize * sizeof(UChar)); /* not accessing beyond memory */
     }
 
 

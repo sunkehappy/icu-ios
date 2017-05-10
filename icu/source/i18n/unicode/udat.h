@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  *******************************************************************************
  * Copyright (C) 1996-2016, International Business Machines
@@ -789,15 +787,16 @@ typedef enum UDateFormatField {
     UDAT_TIME_SEPARATOR_FIELD = 37,
 #endif  /* U_HIDE_INTERNAL_API */
 
-#ifndef U_HIDE_DEPRECATED_API
-    /**
+   /**
      * Number of FieldPosition and UFieldPosition selectors for
      * DateFormat and UDateFormat.
      * Valid selectors range from 0 to UDAT_FIELD_COUNT-1.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * This value is subject to change if new fields are defined
+     * in the future.
+     * @stable ICU 3.0
      */
     UDAT_FIELD_COUNT = 38
-#endif  // U_HIDE_DEPRECATED_API
+
 } UDateFormatField;
 
 
@@ -889,24 +888,23 @@ typedef enum UDateFormatBooleanAttribute {
      * @stable ICU 53
      */
     UDAT_PARSE_ALLOW_NUMERIC = 1,
+#ifndef U_HIDE_DRAFT_API
     /**
      * indicates tolerance of a partial literal match
      * e.g. accepting "--mon-02-march-2011" for a pattern of "'--: 'EEE-WW-MMMM-yyyy"
-     * @stable ICU 56
+     * @draft ICU 56
      */
     UDAT_PARSE_PARTIAL_LITERAL_MATCH = 2,
     /**
      * indicates tolerance of pattern mismatch between input data and specified format pattern.
      * e.g. accepting "September" for a month pattern of MMM ("Sep")
-     * @stable ICU 56
+     * @draft ICU 56
      */
     UDAT_PARSE_MULTIPLE_PATTERNS_FOR_MATCH = 3,
-
-    // Do not conditionalize the following with #ifndef U_HIDE_DEPRECATED_API,
-    // it is needed for layout of DateFormat object.
+#endif /* U_HIDE_DRAFT_API */
     /**
-     * One more than the highest normal UDateFormatBooleanAttribute value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * count boolean date format constants
+     * @stable ICU 53
      */
     UDAT_BOOLEAN_ATTRIBUTE_COUNT = 4
 } UDateFormatBooleanAttribute;

@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 **********************************************************************
 *   Copyright (C) 2001-2015 IBM and others. All rights reserved.
@@ -224,7 +222,7 @@ inline int32_t * addTouint32_tArray(int32_t    *destination,
         if (U_FAILURE(*status)) {
             return NULL;
         }
-        uprv_memcpy(temp, destination, sizeof(int32_t) * (size_t)offset);
+        uprv_memcpy(temp, destination, sizeof(int32_t) * offset);
         *destinationlength = newlength;
         destination        = temp;
     }
@@ -266,7 +264,7 @@ inline int64_t * addTouint64_tArray(int64_t    *destination,
             return NULL;
         }
 
-        uprv_memcpy(temp, destination, sizeof(int64_t) * (size_t)offset);
+        uprv_memcpy(temp, destination, sizeof(int64_t) * offset);
         *destinationlength = newlength;
         destination        = temp;
     }
@@ -1381,7 +1379,7 @@ inline UChar * addToUCharArray(      UChar      *destination,
         }
     }
     if (source1length != 0) {
-        u_memcpy(destination, source1, source1length);
+        uprv_memcpy(destination, source1, sizeof(UChar) * source1length);
     }
     if (source2length != 0) {
         uprv_memcpy(destination + source1length, source2,

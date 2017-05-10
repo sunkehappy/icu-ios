@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 2012-2014, International Business Machines
@@ -47,7 +45,7 @@ static UBool U_CALLCONV uprv_collation_root_cleanup() {
 
 U_CDECL_END
 
-void U_CALLCONV
+void
 CollationRoot::load(UErrorCode &errorCode) {
     if(U_FAILURE(errorCode)) { return; }
     LocalPointer<CollationTailoring> t(new CollationTailoring(NULL));

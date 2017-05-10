@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 ********************************************************************************
 *   Copyright (C) 2005-2016, International Business Machines
@@ -232,8 +230,8 @@ static const DWORD dfFlags[] = {DATE_LONGDATE, DATE_LONGDATE, DATE_SHORTDATE, DA
 void Win32DateFormat::formatDate(const SYSTEMTIME *st, UnicodeString &appendTo) const
 {
     int result;
-    wchar_t stackBuffer[STACK_BUFFER_SIZE];
-    wchar_t *buffer = stackBuffer;
+    UChar stackBuffer[STACK_BUFFER_SIZE];
+    UChar *buffer = stackBuffer;
 
     result = GetDateFormatW(fLCID, dfFlags[fDateStyle - kDateOffset], st, NULL, buffer, STACK_BUFFER_SIZE);
 
@@ -241,12 +239,12 @@ void Win32DateFormat::formatDate(const SYSTEMTIME *st, UnicodeString &appendTo) 
         if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
             int newLength = GetDateFormatW(fLCID, dfFlags[fDateStyle - kDateOffset], st, NULL, NULL, 0);
 
-            buffer = NEW_ARRAY(wchar_t, newLength);
+            buffer = NEW_ARRAY(UChar, newLength);
             GetDateFormatW(fLCID, dfFlags[fDateStyle - kDateOffset], st, NULL, buffer, newLength);
         }
     }
 
-    appendTo.append((const UChar *)buffer, (int32_t) wcslen(buffer));
+    appendTo.append(buffer, (int32_t) wcslen(buffer));
 
     if (buffer != stackBuffer) {
         DELETE_ARRAY(buffer);
@@ -258,8 +256,8 @@ static const DWORD tfFlags[] = {0, 0, 0, TIME_NOSECONDS};
 void Win32DateFormat::formatTime(const SYSTEMTIME *st, UnicodeString &appendTo) const
 {
     int result;
-    wchar_t stackBuffer[STACK_BUFFER_SIZE];
-    wchar_t *buffer = stackBuffer;
+    UChar stackBuffer[STACK_BUFFER_SIZE];
+    UChar *buffer = stackBuffer;
 
     result = GetTimeFormatW(fLCID, tfFlags[fTimeStyle], st, NULL, buffer, STACK_BUFFER_SIZE);
 
@@ -267,12 +265,12 @@ void Win32DateFormat::formatTime(const SYSTEMTIME *st, UnicodeString &appendTo) 
         if (GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
             int newLength = GetTimeFormatW(fLCID, tfFlags[fTimeStyle], st, NULL, NULL, 0);
 
-            buffer = NEW_ARRAY(wchar_t, newLength);
+            buffer = NEW_ARRAY(UChar, newLength);
             GetDateFormatW(fLCID, tfFlags[fTimeStyle], st, NULL, buffer, newLength);
         }
     }
 
-    appendTo.append((const UChar *)buffer, (int32_t) wcslen(buffer));
+    appendTo.append(buffer, (int32_t) wcslen(buffer));
 
     if (buffer != stackBuffer) {
         DELETE_ARRAY(buffer);

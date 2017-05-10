@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT:
  * Copyright (c) 1997-2016, International Business Machines
@@ -307,7 +305,7 @@ void DateFormatTest::TestWallyWedel()
          * Format the output.
          */
         UnicodeString fmtOffset;
-        FieldPosition pos(FieldPosition::DONT_CARE);
+        FieldPosition pos(0);
         sdf->format(today,fmtOffset, pos);
         // UnicodeString fmtOffset = tzS.toString();
         UnicodeString *fmtDstOffset = 0;
@@ -2390,7 +2388,7 @@ void DateFormatTest::TestRelative(int daysdelta,
 
     UErrorCode status = U_ZERO_ERROR;
 
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     UnicodeString test;
     Locale en("en");
     DateFormat *fullrelative = DateFormat::createDateInstance(DateFormat::kFullRelative, loc);
@@ -3428,7 +3426,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         ASSERT_OK(status);
         cal->adoptTimeZone(tz);
         UnicodeString result;
-        FieldPosition pos(FieldPosition::DONT_CARE);
+        FieldPosition pos(0);
         fmt.format(*cal,result,pos);
         if (result != info[4]) {
             errln(info[0] + ";" + info[1] + ";" + info[2] + ";" + info[3] + " expected: '" +
@@ -3941,7 +3939,7 @@ void DateFormatTest::TestFormalChineseDate() {
     }
 
     UDate thedate = date(2009-1900, UCAL_JULY, 28);
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     UnicodeString result;
     sdf->format(thedate,result,pos);
 
@@ -4075,9 +4073,9 @@ void DateFormatTest::TestMonthPatterns()
         { "zh@calendar=chinese",      DateFormat::kLong,  { CharsToUnicodeString("2012\\u58EC\\u8FB0\\u5E74\\u56DB\\u6708\\u521D\\u4E8C"),
                                                             CharsToUnicodeString("2012\\u58EC\\u8FB0\\u5E74\\u95F0\\u56DB\\u6708\\u521D\\u4E8C"),
                                                             CharsToUnicodeString("2012\\u58EC\\u8FB0\\u5E74\\u4E94\\u6708\\u521D\\u4E8C") } },
-        { "zh@calendar=chinese",      DateFormat::kShort, { CharsToUnicodeString("2012/4/2"),
-                                                            CharsToUnicodeString("2012/\\u95F04/2"),
-                                                            CharsToUnicodeString("2012/5/2") } },
+        { "zh@calendar=chinese",      DateFormat::kShort, { CharsToUnicodeString("2012-4-2"),
+                                                            CharsToUnicodeString("2012-\\u95F04-2"),
+                                                            CharsToUnicodeString("2012-5-2") } },
         { "zh@calendar=chinese",      -3,                 { CharsToUnicodeString("\\u58EC\\u8FB0-4-2"),
                                                             CharsToUnicodeString("\\u58EC\\u8FB0-\\u95F04-2"),
                                                             CharsToUnicodeString("\\u58EC\\u8FB0-5-2") } },
@@ -4094,7 +4092,7 @@ void DateFormatTest::TestMonthPatterns()
                                                             CharsToUnicodeString("2 s\\u00ECyu\\u00E8bis ren-chen"),
                                                             CharsToUnicodeString("2 w\\u01D4yu\\u00E8 ren-chen") } },
         { "fr@calendar=chinese",      DateFormat::kShort, { UnicodeString("2/4/29"),        UnicodeString("2/4bis/29"),             UnicodeString("2/5/29") } },
-        { "en@calendar=dangi",        DateFormat::kLong,  { UnicodeString("Third Monthbis 2, 2012(ren-chen)"),  UnicodeString("Fourth Month 2, 2012(ren-chen)"),       UnicodeString("Fifth Month 1, 2012(ren-chen)") } },
+        { "en@calendar=dangi",        DateFormat::kLong,  { UnicodeString("Third Monthbis 2, 2012(29)"),  UnicodeString("Fourth Month 2, 2012(29)"),       UnicodeString("Fifth Month 1, 2012(29)") } },
         { "en@calendar=dangi",        DateFormat::kShort, { UnicodeString("3bis/2/2012"),   UnicodeString("4/2/2012"),              UnicodeString("5/1/2012") } },
         { "en@calendar=dangi",        -2,                 { UnicodeString("78x29-3bis-2"),  UnicodeString("78x29-4-2"),             UnicodeString("78x29-5-1") } },
         { "ko@calendar=dangi",        DateFormat::kLong,  { CharsToUnicodeString("\\uC784\\uC9C4\\uB144 \\uC7243\\uC6D4 2\\uC77C"),
@@ -4130,7 +4128,7 @@ void DateFormatTest::TestMonthPatterns()
                         rootChineseCalendar->set(datePtr->year, datePtr->month-1, datePtr->day);
                         rootChineseCalendar->set(UCAL_IS_LEAP_MONTH, datePtr->isLeapMonth);
                         UnicodeString result;
-                        FieldPosition fpos(FieldPosition::DONT_CARE);
+                        FieldPosition fpos(0);
                         dmft->format(*rootChineseCalendar, result, fpos);
                         if ( result.compare(itemPtr->dateString[idate]) != 0 ) {
                             errln( UnicodeString("FAIL: Chinese calendar format for locale ") + UnicodeString(itemPtr->locale) + ", style " + itemPtr->style +
@@ -4215,7 +4213,7 @@ void DateFormatTest::TestContext()
            } else {
                sdmft->setContext(itemPtr->capitalizationContext, status);
                UnicodeString result;
-               FieldPosition pos(FieldPosition::DONT_CARE);
+               FieldPosition pos(0);
                sdmft->format(*cal, result, pos);
                if (result.compare(itemPtr->expectedFormat) != 0) {
                    errln(UnicodeString("FAIL: format for locale ") + UnicodeString(itemPtr->locale) +
@@ -4329,7 +4327,7 @@ void DateFormatTest::TestNonGregoFmtParse()
                     cal->set(UCAL_HOUR_OF_DAY, caftItemPtr->hour);
                     cal->set(UCAL_MINUTE, caftItemPtr->minute);
                     UnicodeString result;
-                    FieldPosition fpos(FieldPosition::DONT_CARE);
+                    FieldPosition fpos(0);
                     dfmt->format(*cal, result, fpos);
                     if ( result.compare(caftItemPtr->formattedDate) != 0 ) {
                         errln( UnicodeString("FAIL: date format for locale ") + UnicodeString(itemPtr->locale) + ", style " + itemPtr->style +
@@ -4372,10 +4370,10 @@ void DateFormatTest::TestFormatsWithNumberSystems()
     const UDate date = 1451556000000.0; // for UTC: grego 31-Dec-2015 10 AM, hebrew 19 tevet 5776, chinese yi-wei 11mo 21day
     const TestFmtWithNumSysItem items[] = {
         { "haw@calendar=gregorian", DateFormat::kShort, UnicodeString("d/M/yy"),               UnicodeString("31/xii/15") },
-        { "he@calendar=hebrew",     DateFormat::kLong, CharsToUnicodeString("d \\u05D1MMMM y"), CharsToUnicodeString("\\u05D9\\u05F4\\u05D8 \\u05D1\\u05D8\\u05D1\\u05EA \\u05EA\\u05E9\\u05E2\\u05F4\\u05D5") }, 
-        { "zh@calendar=chinese",      DateFormat::kLong, CharsToUnicodeString("rU\\u5E74MMMd"), CharsToUnicodeString("2015\\u4E59\\u672A\\u5E74\\u5341\\u4E00\\u6708\\u5EFF\\u4E00") },
-        { "zh_Hant@calendar=chinese", DateFormat::kLong, CharsToUnicodeString("rU\\u5E74MMMd"), CharsToUnicodeString("2015\\u4E59\\u672A\\u5E74\\u51AC\\u6708\\u5EFF\\u4E00") },
-        { "ja@calendar=chinese", DateFormat::kLong, CharsToUnicodeString("U\\u5E74MMMd\\u65E5"), CharsToUnicodeString("\\u4E59\\u672A\\u5E74\\u5341\\u4E00\\u6708\\u4E8C\\u4E00\\u65E5") },
+        { "he@calendar=hebrew",     DateFormat::kLong, CharsToUnicodeString("d \\u05D1MMMM y"), CharsToUnicodeString("\\u05D9\\u05F4\\u05D8 \\u05D1\\u05D8\\u05D1\\u05EA \\u05EA\\u05E9\\u05E2\\u05F4\\u05D5") }, // "י״ט בטבת תשע״ו"
+        { "zh@calendar=chinese",      DateFormat::kLong, CharsToUnicodeString("rU\\u5E74MMMd"), CharsToUnicodeString("2015\\u4E59\\u672A\\u5E74\\u51AC\\u6708\\u5EFF\\u4E00") }, // "2015乙未年冬月廿一"
+        { "zh_Hant@calendar=chinese", DateFormat::kLong, CharsToUnicodeString("rU\\u5E74MMMd"), CharsToUnicodeString("2015\\u4E59\\u672A\\u5E74\\u51AC\\u6708\\u5EFF\\u4E00") }, // "2015乙未年冬月廿一"
+        { "ja@calendar=chinese", DateFormat::kLong, CharsToUnicodeString("U\\u5E74MMMd\\u65E5"), CharsToUnicodeString("\\u4E59\\u672A\\u5E74\\u5341\\u4E00\\u6708\\u4E8C\\u4E00\\u65E5") }, // "乙未年十一月二一日"
         { NULL, DateFormat::kNone, UnicodeString(""), UnicodeString("") },
     };
     const TestFmtWithNumSysItem * itemPtr;
@@ -4727,7 +4725,7 @@ void DateFormatTest::TestNumberFormatOverride() {
         fmt->adoptNumberFormat(fields, check_nf, status);
         assertSuccess("adoptNumberFormat check_nf", status);
 
-        const NumberFormat* get_nf = fmt->getNumberFormatForField((UChar)0x004D /*'M'*/);
+        const NumberFormat* get_nf = fmt->getNumberFormatForField('M');
         if (get_nf != check_nf) errln("FAIL: getter and setter do not work");
     }
     NumberFormat* check_nf = NumberFormat::createInstance(Locale("en_US"), status);
@@ -4777,7 +4775,7 @@ void DateFormatTest::TestNumberFormatOverride() {
         }
 
         UnicodeString result;
-        FieldPosition pos(FieldPosition::DONT_CARE);
+        FieldPosition pos(0);
         fmt->format(test_date,result, pos);
 
         UnicodeString expected = ((UnicodeString)DATA[i][1]).unescape();;
@@ -4795,7 +4793,7 @@ void DateFormatTest::TestCreateInstanceForSkeleton() {
         return;
     }
     UnicodeString result;
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     fmt->format(date(98, 5-1, 25), result, pos);
     assertEquals("format yMMMMd", "May 25, 1998", result);
     fmt.adoptInstead(DateFormat::createInstanceForSkeleton(
@@ -4819,7 +4817,7 @@ void DateFormatTest::TestCreateInstanceForSkeletonDefault() {
         return;
     }
     UnicodeString result;
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     fmt->format(date(98, 5-1, 25), result, pos);
     assertEquals("format yMMMd", "May 25, 1998", result);
 }
@@ -4836,7 +4834,7 @@ void DateFormatTest::TestCreateInstanceForSkeletonWithCalendar() {
         return;
     }
     UnicodeString result;
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
 
     LocalPointer<Calendar> cal(Calendar::createInstance(
         TimeZone::createTimeZone("GMT-7:00"),
@@ -4904,7 +4902,7 @@ void DateFormatTest::TestChangeCalendar() {
         return;
     }
     UnicodeString result;
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     fmt->format(date(98, 5-1, 25), result, pos);
     assertEquals("format yMMMd", "Iyar 29, 5758", result);
 }

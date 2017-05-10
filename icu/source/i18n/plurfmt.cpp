@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 2009-2015, International Business Machines Corporation and
@@ -218,14 +216,14 @@ PluralFormat::format(const Formattable& obj,
 
 UnicodeString
 PluralFormat::format(int32_t number, UErrorCode& status) const {
-    FieldPosition fpos(FieldPosition::DONT_CARE);
+    FieldPosition fpos(0);
     UnicodeString result;
     return format(Formattable(number), number, result, fpos, status);
 }
 
 UnicodeString
 PluralFormat::format(double number, UErrorCode& status) const {
-    FieldPosition fpos(FieldPosition::DONT_CARE);
+    FieldPosition fpos(0);
     UnicodeString result;
     return format(Formattable(number), number, result, fpos, status);
 }

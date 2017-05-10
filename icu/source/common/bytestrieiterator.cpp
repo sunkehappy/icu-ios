@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 *   Copyright (C) 2010-2012, International Business Machines
@@ -141,6 +139,7 @@ BytesTrie::Iterator::next(UErrorCode &errorCode) {
             } else {
                 pos_=skipValue(pos, node);
             }
+            sp_.set(str_->data(), str_->length());
             return TRUE;
         }
         if(maxLength_>0 && str_->length()==maxLength_) {
@@ -168,14 +167,10 @@ BytesTrie::Iterator::next(UErrorCode &errorCode) {
     }
 }
 
-StringPiece
-BytesTrie::Iterator::getString() const {
-    return str_ == NULL ? StringPiece() : str_->toStringPiece();
-}
-
 UBool
 BytesTrie::Iterator::truncateAndStop() {
     pos_=NULL;
+    sp_.set(str_->data(), str_->length());
     value_=-1;  // no real value for str
     return TRUE;
 }
@@ -204,6 +199,7 @@ BytesTrie::Iterator::branchNext(const uint8_t *pos, int32_t length, UErrorCode &
     str_->append((char)trieByte, errorCode);
     if(isFinal) {
         pos_=NULL;
+        sp_.set(str_->data(), str_->length());
         value_=value;
         return NULL;
     } else {

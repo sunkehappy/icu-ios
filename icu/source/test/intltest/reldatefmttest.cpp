@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 2013-2016, International Business Machines Corporation and
@@ -714,10 +712,10 @@ void RelativeDateTimeFormatterTest::TestGetters() {
     // copy and assignment.
     RelativeDateTimeFormatter fmt2(fmt);
     fmt3 = fmt2;
-    assertEquals("style", (int32_t)UDAT_STYLE_NARROW, fmt3.getFormatStyle());
+    assertEquals("style", UDAT_STYLE_NARROW, fmt3.getFormatStyle());
     assertEquals(
             "context",
-            (int32_t)UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE,
+            UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE,
             fmt3.getCapitalizationContext());
     assertSuccess("", status);
 }

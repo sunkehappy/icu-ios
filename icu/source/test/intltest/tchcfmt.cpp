@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2016, International Business Machines Corporation and
@@ -50,7 +48,7 @@ TestChoiceFormat::TestSimpleExample( void )
     UnicodeString str;
     UnicodeString res1, res2;
     UErrorCode status;
-    FieldPosition fpos(FieldPosition::DONT_CARE);
+    FieldPosition fpos(0);
     Formattable f;
     int32_t ix;
     //for (double i = 0.0; i <= 8.0; ++i) {
@@ -182,7 +180,7 @@ TestChoiceFormat::TestComplexExample( void )
         it_errln("***  ChoiceFormat to Pattern result!");
     }
 
-    FieldPosition fpos(FieldPosition::DONT_CARE);
+    FieldPosition fpos(0);
 
     UnicodeString checkstr[] = { 
         "There are corrupted files on Disk_A",

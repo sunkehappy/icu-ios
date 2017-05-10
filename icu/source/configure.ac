@@ -1,6 +1,5 @@
 # -*-autoconf-*-
-AC_COPYRIGHT([ Copyright (C) 2016 and later: Unicode, Inc. and others. License & terms of use: http://www.unicode.org/copyright.html ])
-# AC_COPYRIGHT([ Copyright (c) 1999-2015, International Business Machines Corporation and others. All Rights Reserved. ])
+AC_COPYRIGHT([ Copyright (c) 1999-2015, International Business Machines Corporation and others. All Rights Reserved. ])
 # configure.in for ICU
 # Stephen F. Booth, heavily modified by Yves and others
 
@@ -506,11 +505,6 @@ if [[ "$GXX" = yes ]]; then
         else
             CXXFLAGS="$OLD_CXXFLAGS"
         fi
-        case "${host}" in
-        *-*-solaris*)
-            CXXFLAGS="$OLD_CXXFLAGS"
-            ;;
-        esac
     fi
 fi
 
@@ -834,8 +828,8 @@ AC_SUBST(U_TZSET)
 
 U_HAVE_TZNAME=0
 AC_CACHE_CHECK(for tzname,ac_cv_var_tzname,
-[AC_LINK_IFELSE([AC_LANG_PROGRAM([[#ifndef _XOPEN_SOURCE
-#define _XOPEN_SOURCE
+[AC_LINK_IFELSE([AC_LANG_PROGRAM([[#ifndef __USE_POSIX
+#define __USE_POSIX
 #endif
 #include <stdlib.h>
 #include <time.h>
@@ -861,8 +855,11 @@ AC_SUBST(U_HAVE_TZNAME)
 AC_SUBST(U_TZNAME)
 
 AC_CACHE_CHECK(for timezone,ac_cv_var_timezone,
-[AC_LINK_IFELSE([AC_LANG_PROGRAM([#ifndef _XOPEN_SOURCE
-#define _XOPEN_SOURCE
+[AC_LINK_IFELSE([AC_LANG_PROGRAM([#ifndef __USE_POSIX
+#define __USE_POSIX
+#endif
+#ifndef __USE_XOPEN
+#define __USE_XOPEN
 #endif
 #include <time.h>
 ], [[timezone = 1;]])],[ac_cv_var_timezone=yes],[ac_cv_var_timezone=no])])
@@ -889,17 +886,6 @@ else
 fi
 AC_SUBST(U_HAVE_TIMEZONE)
 AC_SUBST(U_TIMEZONE)
-
-AC_CHECK_FUNC(strtod_l)
-if test x$ac_cv_func_strtod_l = xyes
-then
-     CONFIG_CPPFLAGS="${CONFIG_CPPFLAGS} -DU_HAVE_STRTOD_L=1"
-     U_HAVE_STRTOD_L=1
-else
-     CONFIG_CPPFLAGS="${CONFIG_CPPFLAGS} -DU_HAVE_STRTOD_L=0"
-     U_HAVE_STRTOD_L=0
-fi
-AC_SUBST(U_HAVE_STRTOD_L)
 
 # Checks for typedefs
 AC_CHECK_TYPE(int8_t,signed char)
@@ -1094,27 +1080,29 @@ AC_ARG_ENABLE(icuio,
 	icuio=true)
 ICU_CONDITIONAL(ICUIO, test "$icuio" = true)
 
+# Enable/disable layout
+AC_ARG_ENABLE(layout,
+	[  --enable-layout         build ICU's DEPRECATED layout library [default=yes]],
+	[case "${enableval}" in
+		yes) layout=true ;;
+		no)  layout=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-layout) ;;
+		esac],
+	layout=true)
+ICU_CONDITIONAL(LAYOUT, test "$layout" = true)
+
 # Enable/disable layoutex
 AC_ARG_ENABLE(layoutex,
-	[  --enable-layoutex         build ICU's Paragraph Layout library [default=yes].
-            icu-le-hb must be installed via pkg-config. See http://harfbuzz.org],
+	[  --enable-layoutex         build ICU's Paragraph Layout library [default=same-as-layout].
+            If not building with the ICU Layout library, then icu-le-hb must be installed via pkg-config.
+            See http://harfbuzz.org],
 	[case "${enableval}" in
-		yes) layoutex=$have_icu_le_hb ;;
+		yes) layoutex=true ;;
 		no)  layoutex=false ;;
 		*) AC_MSG_ERROR(bad value ${enableval} for --enable-layoutex) ;;
 		esac],
-	layoutex=$have_icu_le_hb)
+	layoutex=$layout)
 ICU_CONDITIONAL(LAYOUTEX, test "$layoutex" = true)
-
-# Enable/disable layout
-AC_ARG_ENABLE(layout,
-	[],
-	[case "${enableval}" in
-		yes) AC_MSG_ERROR(The ICU Layout Engine has been removed.) ;;
-		no)   ;;
-		*) ;;
-		esac],
-	)
 
 # Enable/disable tools
 AC_ARG_ENABLE(tools,
@@ -1337,6 +1325,7 @@ AC_CONFIG_FILES([icudefs.mk \
 		stubdata/Makefile \
 		common/Makefile \
 		i18n/Makefile \
+		layout/Makefile \
 		layoutex/Makefile \
 		io/Makefile \
 		extra/Makefile \

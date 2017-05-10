@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1997-2013, International Business Machines Corporation and
@@ -17,10 +15,6 @@
 */
 #ifndef _CRESTSTN
 #define _CRESTSTN
-
-#include "unicode/utypes.h"
-#include "unicode/ures.h"
-
 /* C TEST FOR NEW RESOURCEBUNDLE API*/
 #include "cintltst.h"
 

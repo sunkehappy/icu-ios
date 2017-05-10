@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 1997-2015, International Business Machines Corporation and
@@ -452,7 +450,7 @@ NumberFormat::format(int64_t number,
 //       XXXFormat::format(double
 
 UnicodeString&
-NumberFormat::format(StringPiece decimalNum,
+NumberFormat::format(const StringPiece &decimalNum,
                      UnicodeString& toAppendTo,
                      FieldPositionIterator* fpi,
                      UErrorCode& status) const
@@ -685,7 +683,7 @@ NumberFormat::parseObject(const UnicodeString& source,
 UnicodeString&
 NumberFormat::format(double number, UnicodeString& appendTo) const
 {
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     return format(number, appendTo, pos);
 }
 
@@ -695,7 +693,7 @@ NumberFormat::format(double number, UnicodeString& appendTo) const
 UnicodeString&
 NumberFormat::format(int32_t number, UnicodeString& appendTo) const
 {
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     return format(number, appendTo, pos);
 }
 
@@ -705,7 +703,7 @@ NumberFormat::format(int32_t number, UnicodeString& appendTo) const
 UnicodeString&
 NumberFormat::format(int64_t number, UnicodeString& appendTo) const
 {
-    FieldPosition pos(FieldPosition::DONT_CARE);
+    FieldPosition pos(0);
     return format(number, appendTo, pos);
 }
 

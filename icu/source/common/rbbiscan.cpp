@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 //
 //  file:  rbbiscan.cpp
 //
@@ -1105,17 +1103,6 @@ void RBBIRuleScanner::parse() {
 
     }
 
-    if (U_FAILURE(*fRB->fStatus)) {
-        return;
-    }
-    
-    // If there are no forward rules set an error.
-    //
-    if (fRB->fForwardTree == NULL) {
-        error(U_BRK_RULE_SYNTAX);
-        return;
-    }
-
     //
     // If there were NO user specified reverse rules, set up the equivalent of ".*;"
     //
@@ -1139,15 +1126,16 @@ void RBBIRuleScanner::parse() {
     //
 #ifdef RBBI_DEBUG
     if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "symbols")) {fSymbolTable->rbbiSymtablePrint();}
-    if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "ptree")) {
+    if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "ptree"))
+    {
         RBBIDebugPrintf("Completed Forward Rules Parse Tree...\n");
-        RBBINode::printTree(fRB->fForwardTree, TRUE);
+        fRB->fForwardTree->printTree(TRUE);
         RBBIDebugPrintf("\nCompleted Reverse Rules Parse Tree...\n");
-        RBBINode::printTree(fRB->fReverseTree, TRUE);
+        fRB->fReverseTree->printTree(TRUE);
         RBBIDebugPrintf("\nCompleted Safe Point Forward Rules Parse Tree...\n");
-        RBBINode::printTree(fRB->fSafeFwdTree, TRUE);
+        fRB->fSafeFwdTree->printTree(TRUE);
         RBBIDebugPrintf("\nCompleted Safe Point Reverse Rules Parse Tree...\n");
-        RBBINode::printTree(fRB->fSafeRevTree, TRUE);
+        fRB->fSafeRevTree->printTree(TRUE);
     }
 #endif
 }
@@ -1162,7 +1150,7 @@ void RBBIRuleScanner::parse() {
 void RBBIRuleScanner::printNodeStack(const char *title) {
     int i;
     RBBIDebugPrintf("%s.  Dumping node stack...\n", title);
-    for (i=fNodeStackPtr; i>0; i--) {RBBINode::printTree(fNodeStack[i], TRUE);}
+    for (i=fNodeStackPtr; i>0; i--) {fNodeStack[i]->printTree(TRUE);}
 }
 #endif
 

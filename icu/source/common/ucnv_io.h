@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  **********************************************************************
  *   Copyright (C) 1999-2006, International Business Machines
@@ -77,10 +75,10 @@ typedef struct UConverterAlias {
 #   error U_CHARSET_FAMILY is not valid
 #endif
 
-U_CAPI char * U_CALLCONV
+U_CAPI char * U_EXPORT2
 ucnv_io_stripASCIIForCompare(char *dst, const char *name);
 
-U_CAPI char * U_CALLCONV
+U_CAPI char * U_EXPORT2
 ucnv_io_stripEBCDICForCompare(char *dst, const char *name);
 
 /**
@@ -93,7 +91,7 @@ ucnv_io_stripEBCDICForCompare(char *dst, const char *name);
  * @param pErrorCode The error code
  * @return the converter name in mixed-case, return NULL if the alias is not found.
  */
-U_CAPI const char *
+U_CFUNC const char *
 ucnv_io_getConverterName(const char *alias, UBool *containsOption, UErrorCode *pErrorCode);
 
 /**
@@ -101,7 +99,7 @@ ucnv_io_getConverterName(const char *alias, UBool *containsOption, UErrorCode *p
  * @param pErrorCode The error code
  * @return the number of all aliases
  */
-U_CAPI uint16_t
+U_CFUNC uint16_t
 ucnv_io_countKnownConverters(UErrorCode *pErrorCode);
 
 /**

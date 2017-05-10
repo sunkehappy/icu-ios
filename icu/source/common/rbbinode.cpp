@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 ***************************************************************************
 *   Copyright (C) 2002-2016 International Business Machines Corporation   *
@@ -25,8 +23,6 @@
 #include "unicode/uniset.h"
 #include "unicode/uchar.h"
 #include "unicode/parsepos.h"
-
-#include "cstr.h"
 #include "uvector.h"
 
 #include "rbbirb.h"
@@ -169,6 +165,8 @@ RBBINode *RBBINode::cloneTree() {
             }
         }
     }
+    n->fRuleRoot = this->fRuleRoot;
+    n->fChainIn  = this->fChainIn;
     return n;
 }
 
@@ -194,12 +192,8 @@ RBBINode *RBBINode::cloneTree() {
 //-------------------------------------------------------------------------
 RBBINode *RBBINode::flattenVariables() {
     if (fType == varRef) {
-        RBBINode *retNode  = fLeftChild->cloneTree();
-        if (retNode != NULL) {
-            retNode->fRuleRoot = this->fRuleRoot;
-            retNode->fChainIn  = this->fChainIn;
-        }
-        delete this;   // TODO: undefined behavior. Fix.
+        RBBINode *retNode = fLeftChild->cloneTree();
+        delete this;
         return retNode;
     }
 
@@ -290,7 +284,7 @@ static int32_t serial(const RBBINode *node) {
 }
 
 
-void RBBINode::printNode(const RBBINode *node) {
+void RBBINode::printNode() {
     static const char * const nodeTypeNames[] = {
                 "setRef",
                 "uset",
@@ -310,16 +304,15 @@ void RBBINode::printNode(const RBBINode *node) {
                 "opLParen"
     };
 
-    if (node==NULL) {
-        RBBIDebugPrintf("%10p", (void *)node);
+    if (this==NULL) {
+        RBBIDebugPrintf("%10p", (void *)this);
     } else {
         RBBIDebugPrintf("%10p %5d %12s %c%c  %5d       %5d     %5d       %6d     %d ",
-            (void *)node, node->fSerialNum, nodeTypeNames[node->fType],
-            node->fRuleRoot?'R':' ', node->fChainIn?'C':' ',
-            serial(node->fLeftChild), serial(node->fRightChild), serial(node->fParent),
-            node->fFirstPos, node->fVal);
-        if (node->fType == varRef) {
-            RBBI_DEBUG_printUnicodeString(node->fText);
+            (void *)this, fSerialNum, nodeTypeNames[fType],   fRuleRoot?'R':' ',  fChainIn?'C':' ',
+             serial(fLeftChild), serial(fRightChild), serial(fParent),
+            fFirstPos, fVal);
+        if (fType == varRef) {
+            RBBI_DEBUG_printUnicodeString(fText);
         }
     }
     RBBIDebugPrintf("\n");
@@ -328,8 +321,16 @@ void RBBINode::printNode(const RBBINode *node) {
 
 
 #ifdef RBBI_DEBUG
-U_CFUNC void RBBI_DEBUG_printUnicodeString(const UnicodeString &s, int minWidth) {
-    RBBIDebugPrintf("%*s", minWidth, CStr(s)());
+U_CFUNC void RBBI_DEBUG_printUnicodeString(const UnicodeString &s, int minWidth)
+{
+    int i;
+    for (i=0; i<s.length(); i++) {
+        RBBIDebugPrintf("%c", s.charAt(i));
+        // putc(s.charAt(i), stdout);
+    }
+    for (i=s.length(); i<minWidth; i++) {
+        RBBIDebugPrintf(" ");
+    }
 }
 #endif
 
@@ -344,21 +345,21 @@ void RBBINode::printNodeHeader() {
     RBBIDebugPrintf(" Address   serial        type     LeftChild  RightChild   Parent   position value\n");
 }
     
-void RBBINode::printTree(const RBBINode *node, UBool printHeading) {
+void RBBINode::printTree(UBool printHeading) {
     if (printHeading) {
         printNodeHeader();
     }
-    printNode(node);
-    if (node != NULL) {
+    this->printNode();
+    if (this != NULL) {
         // Only dump the definition under a variable reference if asked to.
         // Unconditinally dump children of all other node types.
-        if (node->fType != varRef) {
-            if (node->fLeftChild != NULL) {
-                printTree(node->fLeftChild, FALSE);
+        if (fType != varRef) {
+            if (fLeftChild != NULL) {
+                fLeftChild->printTree(FALSE);
             }
             
-            if (node->fRightChild != NULL) {
-                printTree(node->fRightChild, FALSE);
+            if (fRightChild != NULL) {
+                fRightChild->printTree(FALSE);
             }
         }
     }

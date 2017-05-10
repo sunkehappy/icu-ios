@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *******************************************************************************
 * Copyright (C) 2007-2015, International Business Machines Corporation and    *
@@ -183,7 +181,7 @@ TimeZoneFormatTest::TestTimeZoneRoundTrip(void) {
 
                 for (int32_t datidx = 0; datidx < nDates; datidx++) {
                     UnicodeString tzstr;
-                    FieldPosition fpos(FieldPosition::DONT_CARE);
+                    FieldPosition fpos(0);
                     // Format
                     sdf->setTimeZone(*tz);
                     sdf->format(DATES[datidx], tzstr, fpos);
@@ -410,7 +408,7 @@ struct LocaleData {
         numDone = 0;
     }
 
-    UBool nextTest(int32_t &rLocaleIndex, int32_t &rPatternIndex) {
+    UBool nextTest(int &rLocaleIndex, int &rPatternIndex) {
         Mutex lock;
         if (patternIndex >= UPRV_LENGTHOF(PATTERNS) - 1) {
             if (localeIndex >= nLocales - 1) {
@@ -653,7 +651,7 @@ void TimeZoneFormatTest::RunTimeRoundTripTests(int32_t threadNumber) {
                     }
 
                     UnicodeString text;
-                    FieldPosition fpos(FieldPosition::DONT_CARE);
+                    FieldPosition fpos(0);
                     sdf->format(testTimes[testidx], text, fpos);
 
                     UDate parsedDate = sdf->parse(text, status);
@@ -833,7 +831,7 @@ TimeZoneFormatTest::TestParse(void) {
             delete tz;
         } else {
             if (DATA[i].expected) {
-                errMsg = (UnicodeString)"Parse failure - expected: " + DATA[i].expected;
+                errln((UnicodeString)"Fail: Parse failure - expected: " + DATA[i].expected);
             }
         }
         if (errMsg.length() > 0) {

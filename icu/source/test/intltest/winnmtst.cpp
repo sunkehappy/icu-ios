@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 ********************************************************************************
 *   Copyright (C) 2005-2016, International Business Machines
@@ -193,7 +191,7 @@ static UnicodeString &getWindowsFormat(int32_t lcid, UBool currency, UnicodeStri
             if (lastError == ERROR_INSUFFICIENT_BUFFER) {
                 int newLength = GetCurrencyFormatW(lcid, 0, nBuffer, NULL, NULL, 0);
 
-                buffer = NEW_ARRAY(wchar_t, newLength);
+                buffer = NEW_ARRAY(UChar, newLength);
                 buffer[0] = 0x0000;
                 GetCurrencyFormatW(lcid, 0, nBuffer, NULL, buffer, newLength);
             }
@@ -207,14 +205,14 @@ static UnicodeString &getWindowsFormat(int32_t lcid, UBool currency, UnicodeStri
             if (lastError == ERROR_INSUFFICIENT_BUFFER) {
                 int newLength = GetNumberFormatW(lcid, 0, nBuffer, NULL, NULL, 0);
 
-                buffer = NEW_ARRAY(wchar_t, newLength);
+                buffer = NEW_ARRAY(UChar, newLength);
                 buffer[0] = 0x0000;
                 GetNumberFormatW(lcid, 0, nBuffer, NULL, buffer, newLength);
             }
         }
     }
 
-    appendTo.append((const UChar *)buffer, (int32_t) wcslen(buffer));
+    appendTo.append(buffer, (int32_t) wcslen(buffer));
 
     if (buffer != stackBuffer) {
         DELETE_ARRAY(buffer);

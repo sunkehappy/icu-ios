@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 *****************************************************************************
 * Copyright (C) 2014-2016, International Business Machines Corporation and
@@ -25,7 +23,7 @@
  * \brief C++ API: Formats relative dates such as "1 day ago" or "tomorrow"
  */
 
-#if !UCONFIG_NO_FORMATTING
+#if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_BREAK_ITERATION
 
 /**
  * Represents the unit for formatting a relative date. e.g "in 5 days"
@@ -76,13 +74,11 @@ typedef enum UDateRelativeUnit {
      */
     UDAT_RELATIVE_YEARS,
 
-#ifndef U_HIDE_DEPRECATED_API
     /**
-     * One more than the highest normal UDateRelativeUnit value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * Count of items in this enum.
+     * @stable ICU 53
      */
     UDAT_RELATIVE_UNIT_COUNT
-#endif  // U_HIDE_DEPRECATED_API
 } UDateRelativeUnit;
 
 /**
@@ -165,13 +161,11 @@ typedef enum UDateAbsoluteUnit {
      */
     UDAT_ABSOLUTE_NOW,
 
-#ifndef U_HIDE_DEPRECATED_API
     /**
-     * One more than the highest normal UDateAbsoluteUnit value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * Count of items in this enum.
+     * @stable ICU 53
      */
     UDAT_ABSOLUTE_UNIT_COUNT
-#endif  // U_HIDE_DEPRECATED_API
 } UDateAbsoluteUnit;
 
 /**
@@ -217,16 +211,13 @@ typedef enum UDateDirection {
      */
     UDAT_DIRECTION_PLAIN,
 
-#ifndef U_HIDE_DEPRECATED_API
     /**
-     * One more than the highest normal UDateDirection value.
-     * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
+     * Count of items in this enum.
+     * @stable ICU 53
      */
     UDAT_DIRECTION_COUNT
-#endif  // U_HIDE_DEPRECATED_API
 } UDateDirection;
 
-#if !UCONFIG_NO_BREAK_ITERATION
 
 U_NAMESPACE_BEGIN
 
@@ -518,6 +509,5 @@ private:
 
 U_NAMESPACE_END
 
-#endif /* !UCONFIG_NO_BREAK_ITERATION */
-#endif /* !UCONFIG_NO_FORMATTING */
-#endif /* __RELDATEFMT_H */
+#endif /* !UCONFIG_NO_FORMATTING && !UCONFIG_NO_BREAK_ITERATION*/
+#endif

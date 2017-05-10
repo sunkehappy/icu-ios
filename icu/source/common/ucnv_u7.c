@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*  
 **********************************************************************
 *   Copyright (C) 2002-2016, International Business Machines
@@ -762,10 +760,7 @@ static const UConverterImpl _UTF7Impl={
     _UTF7GetName,
     NULL, /* we don't need writeSub() because we never call a callback at fromUnicode() */
     NULL,
-    ucnv_getCompleteUnicodeSet,
-
-    NULL,
-    NULL
+    ucnv_getCompleteUnicodeSet
 };
 
 static const UConverterStaticData _UTF7StaticData={

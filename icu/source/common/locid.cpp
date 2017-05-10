@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  **********************************************************************
  *   Copyright (C) 1997-2016, International Business Machines
@@ -44,7 +42,6 @@
 #include "uhash.h"
 #include "ucln_cmn.h"
 #include "ustr_imp.h"
-#include "charstr.h"
 
 U_CDECL_BEGIN
 static UBool U_CALLCONV locale_cleanup(void);
@@ -59,12 +56,6 @@ static UInitOnce gLocaleCacheInitOnce = U_INITONCE_INITIALIZER;
 static UMutex gDefaultLocaleMutex = U_MUTEX_INITIALIZER;
 static UHashtable *gDefaultLocalesHashT = NULL;
 static Locale *gDefaultLocale = NULL;
-
-/**
- * \def ULOC_STRING_LIMIT
- * strings beyond this value crash in CharString
- */
-#define ULOC_STRING_LIMIT 357913941
 
 U_NAMESPACE_END
 
@@ -292,12 +283,13 @@ Locale::Locale( const   char * newLanguage,
     }
     else
     {
-        UErrorCode status = U_ZERO_ERROR;
+        MaybeStackArray<char, ULOC_FULLNAME_CAPACITY> togo;
         int32_t size = 0;
         int32_t lsize = 0;
         int32_t csize = 0;
         int32_t vsize = 0;
         int32_t ksize = 0;
+        char    *p;
 
         // Calculate the size of the resulting string.
 
@@ -305,23 +297,13 @@ Locale::Locale( const   char * newLanguage,
         if ( newLanguage != NULL )
         {
             lsize = (int32_t)uprv_strlen(newLanguage);
-            if ( lsize < 0 || lsize > ULOC_STRING_LIMIT ) { // int32 wrap
-                setToBogus();
-                return;
-            }
             size = lsize;
         }
-
-        CharString togo(newLanguage, lsize, status); // start with newLanguage
 
         // _Country
         if ( newCountry != NULL )
         {
             csize = (int32_t)uprv_strlen(newCountry);
-            if ( csize < 0 || csize > ULOC_STRING_LIMIT ) { // int32 wrap
-                setToBogus();
-                return;
-            }
             size += csize;
         }
 
@@ -336,10 +318,6 @@ Locale::Locale( const   char * newLanguage,
 
             // remove trailing _'s
             vsize = (int32_t)uprv_strlen(newVariant);
-            if ( vsize < 0 || vsize > ULOC_STRING_LIMIT ) { // int32 wrap
-                setToBogus();
-                return;
-            }
             while( (vsize>1) && (newVariant[vsize-1] == SEP_CHAR) )
             {
                 vsize--;
@@ -364,56 +342,70 @@ Locale::Locale( const   char * newLanguage,
         if ( newKeywords != NULL)
         {
             ksize = (int32_t)uprv_strlen(newKeywords);
-            if ( ksize < 0 || ksize > ULOC_STRING_LIMIT ) {
-              setToBogus();
-              return;
-            }
             size += ksize + 1;
         }
 
-        //  NOW we have the full locale string..
-        // Now, copy it back.
 
-        // newLanguage is already copied
+        //  NOW we have the full locale string..
+
+        /*if the whole string is longer than our internal limit, we need
+        to go to the heap for temporary buffers*/
+        if (size >= togo.getCapacity())
+        {
+            // If togo_heap could not be created, initialize with default settings.
+            if (togo.resize(size+1) == NULL) {
+                init(NULL, FALSE);
+            }
+        }
+
+        togo[0] = 0;
+
+        // Now, copy it back.
+        p = togo.getAlias();
+        if ( lsize != 0 )
+        {
+            uprv_strcpy(p, newLanguage);
+            p += lsize;
+        }
 
         if ( ( vsize != 0 ) || (csize != 0) )  // at least:  __v
         {                                      //            ^
-            togo.append(SEP_CHAR, status);
+            *p++ = SEP_CHAR;
         }
 
         if ( csize != 0 )
         {
-            togo.append(newCountry, status);
+            uprv_strcpy(p, newCountry);
+            p += csize;
         }
 
         if ( vsize != 0)
         {
-            togo.append(SEP_CHAR, status)
-                .append(newVariant, vsize, status);
+            *p++ = SEP_CHAR; // at least: __v
+
+            uprv_strncpy(p, newVariant, vsize);  // Must use strncpy because
+            p += vsize;                          // of trimming (above).
+            *p = 0; // terminate
         }
 
         if ( ksize != 0)
         {
             if (uprv_strchr(newKeywords, '=')) {
-                togo.append('@', status); /* keyword parsing */
+                *p++ = '@'; /* keyword parsing */
             }
             else {
-                togo.append('_', status); /* Variant parsing with a script */
+                *p++ = '_'; /* Variant parsing with a script */
                 if ( vsize == 0) {
-                    togo.append('_', status); /* No country found */
+                    *p++ = '_'; /* No country found */
                 }
             }
-            togo.append(newKeywords, status);
+            uprv_strcpy(p, newKeywords);
+            p += ksize;
         }
 
-        if (U_FAILURE(status)) {
-            // Something went wrong with appending, etc.
-            setToBogus();
-            return;
-        }
         // Parse it, because for example 'language' might really be a complete
         // string.
-        init(togo.data(), FALSE);
+        init(togo.getAlias(), FALSE);
     }
 }
 
@@ -670,7 +662,6 @@ Locale::setToBogus() {
     *script = 0;
     *country = 0;
     fIsBogus = TRUE;
-    variantBegin = 0;
 }
 
 const Locale& U_EXPORT2

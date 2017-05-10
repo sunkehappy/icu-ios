@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  *******************************************************************************
  * Copyright (C) 1997-2015, International Business Machines Corporation and    *
@@ -319,7 +317,7 @@ DateFormat::format(UDate date, UnicodeString& appendTo) const
 {
     // Note that any error information is just lost.  That's okay
     // for this convenience method.
-    FieldPosition fpos(FieldPosition::DONT_CARE);
+    FieldPosition fpos(0);
     return format(date, appendTo, fpos);
 }
 

@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /********************************************************************
  * COPYRIGHT: 
  * Copyright (c) 1996-2012, International Business Machines Corporation and
@@ -25,7 +23,6 @@ void addFormatTest(TestNode** root);
 void addConvert(TestNode** root);
 void addCollTest(TestNode** root);
 void addComplexTest(TestNode** root);
-void addBidiTransformTest(TestNode** root);
 void addUDataTest(TestNode** root);
 void addUTF16Test(TestNode** root);
 void addUTF8Test(TestNode** root);
@@ -61,7 +58,6 @@ void addAllTests(TestNode** root)
     addStandardNamesTest(root);
     addUCsdetTest(root);
     addComplexTest(root);
-    addBidiTransformTest(root);
     addUSetTest(root);
 #if !UCONFIG_NO_IDNA
     addUStringPrepTest(root);

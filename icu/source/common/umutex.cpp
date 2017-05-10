@@ -1,9 +1,7 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
 ******************************************************************************
 *
-*   Copyright (C) 1997-2016, International Business Machines
+*   Copyright (C) 1997-2015, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 *
 ******************************************************************************
@@ -39,7 +37,16 @@ static UMutex   globalMutex = U_MUTEX_INITIALIZER;
 // Build time user mutex hook: #include "U_USER_MUTEX_CPP"
 #include U_MUTEX_XSTR(U_USER_MUTEX_CPP)
 
-#elif U_PLATFORM_USES_ONLY_WIN32_API
+#elif U_PLATFORM_HAS_WIN32_API
+
+//-------------------------------------------------------------------------------------------
+//
+//    Windows Specific Definitions
+//
+//        Note: Cygwin (and possibly others) have both WIN32 and POSIX.
+//              Prefer Win32 in these cases.  (Win32 comes ahead in the #if chain)
+//
+//-------------------------------------------------------------------------------------------
 
 #if defined U_NO_PLATFORM_ATOMICS
 #error ICU on Win32 requires support for low level atomic operations.
@@ -61,8 +68,10 @@ U_NAMESPACE_BEGIN
 U_COMMON_API UBool U_EXPORT2 umtx_initImplPreInit(UInitOnce &uio) {
     for (;;) {
         int32_t previousState = InterlockedCompareExchange(
-            (LONG volatile *) // this is the type given in the API doc for this function.
-                &uio.fState,  //  Destination
+#if (U_PLATFORM == U_PF_MINGW) || (U_PLATFORM == U_PF_CYGWIN) || defined(__clang__)
+           (LONG volatile *) // this is the type given in the API doc for this function.
+#endif
+            &uio.fState,  //  Destination
             1,            //  Exchange Value
             0);           //  Compare value
 

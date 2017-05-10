@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*  
 **********************************************************************
 *   Copyright (C) 2002-2016, International Business Machines
@@ -1074,10 +1072,7 @@ static const UConverterImpl _CESU8Impl={
     NULL,
     NULL,
     NULL,
-    ucnv_getCompleteUnicodeSet,
-
-    NULL,
-    NULL
+    ucnv_getCompleteUnicodeSet
 };
 
 static const UConverterStaticData _CESU8StaticData={

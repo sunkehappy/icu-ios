@@ -1,5 +1,3 @@
-// Copyright (C) 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html
 /*
  * Copyright (C) 2015, International Business Machines
  * Corporation and others.  All Rights Reserved.
@@ -243,9 +241,9 @@ DecimalFormatImpl::setMultiplierScale(int32_t scale) {
     if (scale == 0) {
         // Needed to preserve equality. fMultiplier == 0 means
         // multiplier is 1.
-        fMultiplier.set((int32_t)0);
+        fMultiplier.set(0);
     } else {
-        fMultiplier.set((int32_t)1);
+        fMultiplier.set(1);
         fMultiplier.shiftDecimalRight(scale);
     }
 }
@@ -427,7 +425,7 @@ DecimalFormatImpl::format(
 
 UnicodeString &
 DecimalFormatImpl::format(
-        StringPiece number,
+        const StringPiece &number,
         UnicodeString &appendTo,
         FieldPositionIterator *posIter,
         UErrorCode &status) const {
@@ -708,7 +706,7 @@ DecimalFormatImpl::getMultiplier() const {
 void
 DecimalFormatImpl::setMultiplier(int32_t m) {
     if (m == 0 || m == 1) {
-        fMultiplier.set((int32_t)0);
+        fMultiplier.set(0);
     } else {
         fMultiplier.set(m);
     }
@@ -1483,7 +1481,7 @@ DecimalFormatImpl::toNumberPattern(
             }
         } else {
             if (i < roundingIncrementUpperExp && i >= roundingIncrementLowerExp) {
-                result.append((UChar)(fEffPrecision.fMantissa.fRoundingIncrement.getDigitByExponent(i) + kPatternZeroDigit));
+                result.append(fEffPrecision.fMantissa.fRoundingIncrement.getDigitByExponent(i) + kPatternZeroDigit);
             } else if (minInterval.contains(i)) {
                 result.append(kPatternZeroDigit);
             } else {
