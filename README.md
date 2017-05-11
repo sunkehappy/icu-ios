@@ -1,5 +1,5 @@
 # icu-ios
-This is a [ICU](http://site.icu-project.org/) sub project for iOS project integration. And the [ICU] version is 58.2.
+This is a [ICU](http://site.icu-project.org/) sub project for iOS project integration. And the [ICU] version is 57.1.
 
 ### How to use
 1. Clone this project.
@@ -25,7 +25,11 @@ An example:
         return dest;
     }
 
+### Reduce size
+If you care about the final app size, you may want to use this tool: [ICU Data Library Customizer](http://apps.icu-project.org/datacustom/).
+
 ### Thanks to
 1. [How to build ICU so I can use it in an iPhone app?](http://stackoverflow.com/questions/8126233/how-to-build-icu-so-i-can-use-it-in-an-iphone-app)
 2. [Kiwix](https://sourceforge.net/p/kiwix/kiwix/ci/06a326ba5b9b1514c17797c2c8113eb3dd28e792/tree/ios/)
 3. [Can I have Swift, Objective-C, C and C++ files in the same Xcode project?](http://stackoverflow.com/questions/32541268/can-i-have-swift-objective-c-c-and-c-files-in-the-same-xcode-project/32546879#32546879)
+4. [reduce icu data library size](https://github.com/mapnik/mapnik-packaging/issues/95)
