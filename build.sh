@@ -1,6 +1,8 @@
 
 ICU_ROOT=$(pwd)
 
+rm -rf build-*
+
 ./configure_host.sh
 mkdir -p build-host && cd build-host && gnumake
 
